@@ -21,8 +21,19 @@
   (unless (package-installed-p p)
     (package-install p)))
 
+;; How do we handle backups?
+(make-directory "~/.emacs.d/backups" t)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(setq backup-by-copying t)
+(setq version-control t)
+(setq delete-old-versions t)
+
 ;; Hide the splash screen
 (setq inhibit-splash-screen t)
+
+;; Disable the toolbar (useless) but show the menu bar
+(tool-bar-mode -1)
+(menu-bar-mode 1)
 
 ;; Configure SLiME
 (setq inferior-lisp-program "/usr/bin/sbcl")
