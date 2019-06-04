@@ -6,10 +6,10 @@
 (when (< emacs-major-version 24)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
-;; Activate all the packages (autoloads)
+;; Activate package autoloads
 (package-initialize)
 
-;; List packages I use
+;; List the packages I use
 (defvar my-packages '(slime))
 
 ;; Fetch the list of available packages
@@ -31,25 +31,19 @@
 ;; Hide the splash screen
 (setq inhibit-splash-screen t)
 
-;; Disable the toolbar (useless) but show the menu bar
+;; Disable toolbar but keep the menu bar
 (tool-bar-mode -1)
 (menu-bar-mode 1)
 
 ;; Configure SLiME
 (setq inferior-lisp-program "/usr/bin/sbcl")
 (setq slime-contribs '(slime-fancy))
-
-;; Let desktop mode restore our last session
-(desktop-save-mode 1)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(custom-enabled-themes (quote (tango-dark))))
+ '(package-selected-packages (quote (slime))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
