@@ -1,0 +1,102 @@
+#+TITLE: Emacs Config
+#+AUTHOR: Kiel Lofstrand
+#+TOC: true
+
+This is my Emacs configuration.  I'm using [[https://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs configuration]] as a reference since it seems to be the best!
+
+* Start Up
+
+First, we require package management.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+#+END_SRC
+
+List the repositories we use.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+  (when (< emacs-major-version 24)
+    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+  (package-initialize)
+#+END_SRC
+
+List the packages I'm currently using.
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my-packages '(slime))
+#+END_SRC
+
+Fetch the list of available packages.
+
+#+BEGIN_SRC emacs-lisp
+  (unless package-archive-contents
+    (package-refresh-contents))
+#+END_SRC
+
+Install missing packages automatically.
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (pkg my-packages)
+    (unless (package-installed-p pkg)
+      (package-install pkg)))
+#+END_SRC
+
+* Personal Information
+
+#+BEGIN_SRC emacs-lisp
+  (setq user-full-name "Kiel Lofstrand")
+  (setq user-mail-address "kiel.lofstrand@gmail.com")
+#+END_SRC
+
+* Backups
+
+Move backup files to a dedicated directory where they're easier to find:
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+  (setq backup-by-copying t)
+  (setq version-control t)
+  (setq delete-old-versions t)
+#+END_SRC
+
+* Windows
+
+Get rid of the toolbar, it takes up too much space.
+
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+#+END_SRC
+
+Keep the menu bar, it's handy sometimes.
+
+#+BEGIN_SRC emacs-lisp
+  (menu-bar-mode 1)
+#+END_SRC
+
+* Org-mode
+
+#+BEGIN_SRC emacs-lisp
+  (require 'org)
+#+END_SRC
+
+* SLiME
+
+Configure our lisp interpretter.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+#+END_SRC
+
+Which SLiME features are we using?
+
+#+BEGIN_SRC emacs-lisp
+  (setq slime-contribs '(slime-fancy))
+#+END_SRC
+
+* Theme
+
+#+BEGIN_SRC emacs-lisp
+  (custom-set-variables
+   '(custom-enabled-themes (quote (tango-dark))))
+#+END_SRC
