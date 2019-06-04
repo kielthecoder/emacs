@@ -80,12 +80,24 @@ Keep the menu bar, it's handy sometimes.
   (require 'org)
 #+END_SRC
 
-* SLiME
+** Exports
 
-Configure our lisp interpretter.
+Setup other export backends not loaded by default.
 
 #+BEGIN_SRC emacs-lisp
-  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (require 'ox-md)
+#+END_SRC
+
+* SLiME
+
+Configure our lisp interpretter.  If we're running on Windows, assume SBCL is somewhere in our PATH.
+
+#+BEGIN_SRC emacs-lisp
+  (cond
+   ((string-equal system-type "windows-nt")
+    (setq inferior-lisp-program "sbcl"))
+   (t
+    (setq inferior-lisp-program "/usr/bin/sbcl")))
 #+END_SRC
 
 Which SLiME features are we using?
