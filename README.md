@@ -100,7 +100,7 @@ Setup other export backends not loaded by default.
 Configure our lisp interpretter.  If we're running on Windows, assume SBCL is somewhere in our PATH.
 
     (if (string-equal system-type "windows-nt")
-      (setq inferior-lisp-program "sbcl"))
+      (setq inferior-lisp-program "sbcl")
       (setq inferior-lisp-program "/usr/bin/sbcl"))
 
 Which SLiME features are we using?
