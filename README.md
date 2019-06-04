@@ -1,19 +1,19 @@
 
 # Table of Contents
 
-1.  [Start Up](#org33fc0dc)
-2.  [Personal Information](#orgb518d3e)
-3.  [Backups](#orgd4fd3e9)
-4.  [Windows](#org547c546)
-5.  [Org-mode](#org5936de2)
-    1.  [Exports](#org40e648f)
-6.  [SLiME](#org991f434)
-7.  [Theme](#org293ec92)
+1.  [Start Up](#orgf6c37d7)
+2.  [Personal Information](#org4502276)
+3.  [Backups](#orge6a7e41)
+4.  [Windows](#org1690074)
+5.  [Org-mode](#org92b2edf)
+    1.  [Exports](#org09467b0)
+6.  [SLiME](#orgd18ef16)
+7.  [Theme](#org818ccf0)
 
 This is my Emacs configuration.  I'm using [Sacha Chua's Emacs configuration](https://pages.sachachua.com/.emacs.d/Sacha.html) as a reference since it seems to be the best!
 
 
-<a id="org33fc0dc"></a>
+<a id="orgf6c37d7"></a>
 
 # Start Up
 
@@ -44,7 +44,7 @@ Install missing packages automatically.
         (package-install pkg)))
 
 
-<a id="orgb518d3e"></a>
+<a id="org4502276"></a>
 
 # Personal Information
 
@@ -52,7 +52,7 @@ Install missing packages automatically.
     (setq user-mail-address "kiel.lofstrand@gmail.com")
 
 
-<a id="orgd4fd3e9"></a>
+<a id="orge6a7e41"></a>
 
 # Backups
 
@@ -64,7 +64,7 @@ Move backup files to a dedicated directory where they're easier to find:
     (setq delete-old-versions t)
 
 
-<a id="org547c546"></a>
+<a id="org1690074"></a>
 
 # Windows
 
@@ -77,14 +77,14 @@ Keep the menu bar, it's handy sometimes.
     (menu-bar-mode 1)
 
 
-<a id="org5936de2"></a>
+<a id="org92b2edf"></a>
 
 # Org-mode
 
     (require 'org)
 
 
-<a id="org40e648f"></a>
+<a id="org09467b0"></a>
 
 ## Exports
 
@@ -93,20 +93,24 @@ Setup other export backends not loaded by default.
     (require 'ox-md)
 
 
-<a id="org991f434"></a>
+<a id="orgd18ef16"></a>
 
 # SLiME
 
-Configure our lisp interpretter.
+Configure our lisp interpretter.  If we're running on Windows, assume SBCL is somewhere in our PATH.
 
-    (setq inferior-lisp-program "/usr/bin/sbcl")
+    (cond
+     ((string-equal system-type "windows-nt")
+      (setq inferior-lisp-program "sbcl"))
+     (t
+      (setq inferior-lisp-program "/usr/bin/sbcl")))
 
 Which SLiME features are we using?
 
     (setq slime-contribs '(slime-fancy))
 
 
-<a id="org293ec92"></a>
+<a id="org818ccf0"></a>
 
 # Theme
 
