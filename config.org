@@ -6,10 +6,11 @@ This is my Emacs configuration.  I'm using [[https://pages.sachachua.com/.emacs.
 
 * Start Up
 
-First, we require package management.
+First, we require package management.  And require CL here as well.
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
+  (require 'cl)
 #+END_SRC
 
 List the repositories we use.
@@ -62,6 +63,12 @@ Move backup files to a dedicated directory where they're easier to find:
 
 * Windows
 
+If you ever miss the splash screen, hit C-h C-a to see it again.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-splash-screen t)
+#+END_SRC
+
 Get rid of the toolbar, it takes up too much space.
 
 #+BEGIN_SRC emacs-lisp
@@ -72,6 +79,33 @@ Keep the menu bar, it's handy sometimes.
 
 #+BEGIN_SRC emacs-lisp
   (menu-bar-mode 1)
+#+END_SRC
+
+* Handy Helpers
+
+Create a function to transpose windows (useful for swapping top/bottom or left/right).  This was copied from [[https://www.emacswiki.org/emacs/TransposeWindows][EmacsWiki]].
+
+#+BEGIN_SRC emacs-lisp
+  (defun transpose-windows ()
+    "Transpose two windows.  If more or less than 2 windows are visible, error."
+    (interactive)
+    (unless (= 2 (count-windows))
+      (error "There are not 2 windows."))
+    (let* ((windows (window-list))
+           (w1 (cl-first windows))
+           (w2 (cl-second windows))
+           (w1b (window-buffer w1))
+           (w2b (window-buffer w2)))
+      (set-window-buffer w1 w2b)
+      (set-window-buffer w2 w1b)))
+#+END_SRC
+
+** Key Bindings
+
+Give our nifty functions some useful key bindings.
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x x") 'transpose-windows)
 #+END_SRC
 
 * Org-mode
