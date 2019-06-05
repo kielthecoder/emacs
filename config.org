@@ -6,14 +6,15 @@ This is my Emacs configuration.  I'm using [[https://pages.sachachua.com/.emacs.
 
 * Start Up
 
-First, we require package management.  And require CL here as well.
+Which packages am I always going to require?
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
   (require 'cl)
+  (require 'org)
 #+END_SRC
 
-List the repositories we use.
+List the package repositories I use.
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -22,17 +23,17 @@ List the repositories we use.
   (package-initialize)
 #+END_SRC
 
-List the packages I'm currently using.
-
-#+BEGIN_SRC emacs-lisp
-  (defvar my-packages '(slime))
-#+END_SRC
-
 Fetch the list of available packages.
 
 #+BEGIN_SRC emacs-lisp
   (unless package-archive-contents
     (package-refresh-contents))
+#+END_SRC
+
+Define the packages I'm currently using.
+
+#+BEGIN_SRC emacs-lisp
+  (defvar my-packages '(slime))
 #+END_SRC
 
 Install missing packages automatically.
@@ -61,7 +62,7 @@ Move backup files to a dedicated directory where they're easier to find:
   (setq delete-old-versions t)
 #+END_SRC
 
-* Windows
+* GUI
 
 If you ever miss the splash screen, hit C-h C-a to see it again.
 
@@ -110,13 +111,7 @@ Give our nifty functions some useful key bindings.
 
 * Org-mode
 
-#+BEGIN_SRC emacs-lisp
-  (require 'org)
-#+END_SRC
-
-** Exports
-
-Setup other export backends not loaded by default.
+Some export backends are not loaded by default.
 
 #+BEGIN_SRC emacs-lisp
   (require 'ox-md)
