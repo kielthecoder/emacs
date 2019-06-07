@@ -111,10 +111,24 @@ Give our nifty functions some useful key bindings.
 
 * Org-mode
 
+Add some global key bindings for Org commands.
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c c") 'org-capture)
+#+END_SRC
+
 Some export backends are not loaded by default.
 
 #+BEGIN_SRC emacs-lisp
   (require 'ox-md)
+#+END_SRC
+
+Make sure we log times for when items were marked DONE.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-log-done 'time)
 #+END_SRC
 
 * SLiME
