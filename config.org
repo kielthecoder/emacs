@@ -6,15 +6,15 @@ This is my Emacs configuration.  I'm using [[https://pages.sachachua.com/.emacs.
 
 * Start Up
 
-Which packages am I always going to require?
+Which packages am I always going to require?  Order isn't important here.
 
 #+BEGIN_SRC emacs-lisp
   (require 'package)
-  (require 'cl)
   (require 'org)
+  (require 'cl)
 #+END_SRC
 
-List the package repositories I use.
+List the available package repositories.  I think most distributions are running at least Emacs 24 by now, but you never know.
 
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -64,16 +64,17 @@ Move backup files to a dedicated directory where they're easier to find:
 
 * GUI
 
-If you ever miss the splash screen, hit C-h C-a to see it again.
+If you ever miss the splash screen, C-h C-a is your friend.
 
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-splash-screen t)
 #+END_SRC
 
-Get rid of the toolbar, it takes up too much space.
+Check to see if tool-bar-mode is defined, then get rid of it.  It takes up too much space.
 
 #+BEGIN_SRC emacs-lisp
-  (tool-bar-mode -1)
+  (if (functionp #'tool-bar-mode)
+      (tool-bar-mode -1))
 #+END_SRC
 
 Keep the menu bar, it's handy sometimes.
@@ -84,6 +85,8 @@ Keep the menu bar, it's handy sometimes.
 
 * Handy Helpers
 
+** Transpose Windows
+
 Create a function to transpose windows (useful for swapping top/bottom or left/right).  This was copied from [[https://www.emacswiki.org/emacs/TransposeWindows][EmacsWiki]].
 
 #+BEGIN_SRC emacs-lisp
@@ -91,7 +94,7 @@ Create a function to transpose windows (useful for swapping top/bottom or left/r
     "Transpose two windows.  If more or less than 2 windows are visible, error."
     (interactive)
     (unless (= 2 (count-windows))
-      (error "There are not 2 windows."))
+      (error "There must only be 2 windows open."))
     (let* ((windows (window-list))
            (w1 (cl-first windows))
            (w2 (cl-second windows))
@@ -125,7 +128,7 @@ Some export backends are not loaded by default.
   (require 'ox-md)
 #+END_SRC
 
-Make sure we log times for when items were marked DONE.
+Make sure we log times for when items are marked DONE.
 
 #+BEGIN_SRC emacs-lisp
   (setq org-log-done 'time)
