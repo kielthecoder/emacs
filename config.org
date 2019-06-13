@@ -89,6 +89,8 @@ Keep the menu bar, it's handy sometimes.
   (menu-bar-mode 1)
 #+END_SRC
 
+** Line Numbers
+
 Just found out about display-line-numbers-mode in Emacs 26.
 
 #+BEGIN_SRC emacs-lisp
