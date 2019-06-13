@@ -83,6 +83,13 @@ Keep the menu bar, it's handy sometimes.
   (menu-bar-mode 1)
 #+END_SRC
 
+Just found out about display-line-numbers-mode.
+
+#+BEGIN_SRC emacs-lisp
+  (display-line-numbers-mode 1)
+
+#+END_SRC
+
 * Handy Helpers
 
 ** Transpose Windows
