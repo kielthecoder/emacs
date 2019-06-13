@@ -64,11 +64,15 @@ Move backup files to a dedicated directory where they're easier to find:
 
 * GUI
 
+** Splash Screen
+
 If you ever miss the splash screen, C-h C-a is your friend.
 
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-splash-screen t)
 #+END_SRC
+
+** Toolbar
 
 Check to see if tool-bar-mode is defined, then get rid of it.  It takes up too much space.
 
@@ -77,17 +81,19 @@ Check to see if tool-bar-mode is defined, then get rid of it.  It takes up too m
       (tool-bar-mode -1))
 #+END_SRC
 
+** Menu Bar
+
 Keep the menu bar, it's handy sometimes.
 
 #+BEGIN_SRC emacs-lisp
   (menu-bar-mode 1)
 #+END_SRC
 
-Just found out about display-line-numbers-mode.
+Just found out about display-line-numbers-mode in Emacs 26.
 
 #+BEGIN_SRC emacs-lisp
-  (display-line-numbers-mode 1)
-
+  (if (functionp #'display-line-numbers-mode)
+      (display-line-numbers-mode 1))
 #+END_SRC
 
 * Handy Helpers
