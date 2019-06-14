@@ -102,8 +102,16 @@ Keep the menu bar, it's handy sometimes.
 Just found out about display-line-numbers-mode in Emacs 26.
 
 #+BEGIN_SRC emacs-lisp
-  (if (functionp #'display-line-numbers-mode)
-      (display-line-numbers-mode))
+  (if (functionp #'global-display-line-numbers-mode)
+      (global-display-line-numbers-mode t))
+#+END_SRC
+
+** Save Desktop
+
+Make sure we restore our session next time we open Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (desktop-save-mode 1)
 #+END_SRC
 
 * Handy Helpers
@@ -136,6 +144,14 @@ Give our nifty functions some useful key bindings.
 #+END_SRC
 
 * Org-mode
+
+** Visual Line Mode
+
+Lets add a hook to set Visual Line Mode in Org-mode because I like to see everything on one screen without having to move the curosr left and right.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook #'visual-line-mode)
+#+END_SRC
 
 ** Key Bindings
 
