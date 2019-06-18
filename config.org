@@ -50,7 +50,7 @@ Fetch the list of available packages.
 Define the packages I'm currently using.
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my-packages '(async magit slime))
+  (defvar my-packages '(slime))
 #+END_SRC
 
 Install missing packages automatically.
@@ -112,7 +112,8 @@ Just found out about display-line-numbers-mode in Emacs 26.
 
 #+BEGIN_SRC emacs-lisp
   (if (functionp #'global-display-line-numbers-mode)
-      (global-display-line-numbers-mode t))
+      (global-display-line-numbers-mode t)
+    (global-linum-mode t))
 #+END_SRC
 
 ** Save Desktop
