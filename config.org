@@ -124,6 +124,13 @@ Make sure we restore our session next time we open Emacs.
   (desktop-save-mode 1)
 #+END_SRC
 
+** Visible Bell
+
+On Windows, the ding gets pretty annoying.
+#+BEGIN_SRC emacs-lisp
+  (setq visible-bell 1)
+#+END_SRC
+
 * Handy Helpers
 
 ** Transpose Windows
@@ -187,6 +194,12 @@ Make sure we log times for when items are marked DONE.
 
 #+BEGIN_SRC emacs-lisp
   (setq org-log-done 'time)
+#+END_SRC
+
+Setup a default target file for notes.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-default-notes-file (concat org-directory "/notes.org"))
 #+END_SRC
 
 * SLiME
