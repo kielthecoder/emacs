@@ -4,6 +4,15 @@
 
 This is my Emacs configuration.  I'm using [[https://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs configuration]] as a reference since it seems to be the best!
 
+* Bug Fixes
+
+** Can't download packages from ELPA or MELPA
+
+#+BEGIN_SRC emacs-lisp
+  (when (and (= emacs-major-version 26) (< emacs-minor-version 3))
+    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+#+END_SRC
+
 * Start Up
 
 ** Required Packages
