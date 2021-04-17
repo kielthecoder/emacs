@@ -2,21 +2,20 @@
 #+AUTHOR: Kiel Lofstrand
 #+TOC: true
 
+* About
+
 This is my Emacs configuration.  I'm using [[https://pages.sachachua.com/.emacs.d/Sacha.html][Sacha Chua's Emacs configuration]] as a reference since it seems to be the best!
 
-* Bug Fixes
-
-** Can't download packages from ELPA or MELPA
+* Personal Information
 
 #+BEGIN_SRC emacs-lisp
-  (when (and (= emacs-major-version 26) (< emacs-minor-version 3))
-    (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3"))
+  (setq user-full-name "Kiel Lofstrand")
+  (setq user-mail-address "kiel.lofstrand@gmail.com")
 #+END_SRC
 
 * Start Up
-
 ** Required Packages
-   
+
 Which packages am I always going to require?  Order isn't important here.
 
 #+BEGIN_SRC emacs-lisp
@@ -59,7 +58,7 @@ Fetch the list of available packages.
 Define the packages I'm currently using.
 
 #+BEGIN_SRC emacs-lisp
-  (defvar my-packages '(slime helm))
+  (defvar my-packages '(org slime org-journal f))
 #+END_SRC
 
 Install missing packages automatically.
@@ -70,13 +69,51 @@ Install missing packages automatically.
       (package-install pkg)))
 #+END_SRC
 
-* Personal Information
+Immediately require any packages used within this file.
 
 #+BEGIN_SRC emacs-lisp
-  (setq user-full-name "Kiel Lofstrand")
-  (setq user-mail-address "kiel.lofstrand@gmail.com")
+  (require 'f)
+#+END_SRC
+   
+* Important Directories
+
+Some packages need to know where to save things.
+
+** Dropbox
+
+Indicate where Dropbox lives on this machine.  A lot of things should be saved there so they are synced across all devices.
+
+#+BEGIN_SRC emacs-lisp
+  (setq dropbox-dir (f-join "/" "Dropbox"))
 #+END_SRC
 
+** org-journal
+
+Where should we save our journal entries?
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-journal-dir (f-join dropbox-dir "Notes" "Journal"))
+#+END_SRC
+
+** org-capture
+
+Where should we save captured snippets?
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-default-notes-file (f-join dropbox-dir "Notes" "notes.org"))
+  (setq org-capture-tasks (f-join dropbox-dir "Notes" "tasks.org"))
+  (setq org-capture-journal (f-join dropbox-dir "Notes" "journal.org"))
+#+END_SRC
+  
+* Default Buffers
+
+I want to open these files every time I start Emacs because I'm going to need them anyway.
+
+#+BEGIN_SRC emacs-lisp
+  (find-file org-capture-tasks)
+  (find-file org-capture-journal)
+#+END_SRC
+  
 * Backups
 
 Move backup files to a dedicated directory where they're easier to find:
@@ -170,7 +207,6 @@ Give our nifty functions some useful key bindings.
 #+END_SRC
 
 * Org-mode
-
 ** Visual Line Mode
 
 Lets add a hook to set Visual Line Mode in Org-mode because I like to see everything on one screen without having to move the curosr left and right.
@@ -179,6 +215,24 @@ Lets add a hook to set Visual Line Mode in Org-mode because I like to see everyt
   (add-hook 'org-mode-hook #'visual-line-mode)
 #+END_SRC
 
+** Org Journal
+
+#+BEGIN_SRC emacs-lisp
+  (require 'org-journal)
+#+END_SRC
+   
+** Org Capture
+
+Using Capture Templates described on [[https://orgmode.org/manual/Capture-templates.html#Capture-templates][10.1.3 Capture templates]]:
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-capture-templates
+	'(("t" "TODO" entry (file+headline org-capture-tasks "Tasks")
+	   "* TODO %?\n  %i\n  %a")
+	  ("j" "Journal" entry (file+datetree org-capture-journal)
+	   "* %?\nEntered on %U\n  %i\n  %a")))
+#+END_SRC
+   
 ** Key Bindings
 
 Add some global key bindings for Org commands.
@@ -199,12 +253,6 @@ Some export backends are not loaded by default.
 
 ** Agenda
 
-Where do we default our org files to?
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'org-agenda-files "~/repos/org/projects.org")
-#+END_SRC
-
 Make sure we log times for when items are marked DONE.
 
 #+BEGIN_SRC emacs-lisp
@@ -216,14 +264,6 @@ Setup a default target file for notes.
 #+BEGIN_SRC emacs-lisp
   (setq org-default-notes-file (concat org-directory "/notes.org"))
 #+END_SRC
-
-This bit was borrowed from [[https://blog.aaronbieber.com/2017/03/19/organizing-notes-with-refile.html][Organizing Notes With Refile]] by Aaron Bieber.  We want to consider files other than the current one and look at least 3 levels deep to see where we should refile to.
-
-#+BEGIN_SRC emacs-lisp
-  ;; (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
-#+END_SRC
-
-Actually, this guy seems to be complicating things immensely, guess I'll learn Agenda/Refile with the defaults first.
 
 * SLiME
 
